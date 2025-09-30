@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar Desplegable</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            height: 100vh;
+            width: 60px;
+            /* angosta por defecto */
+            background: #1a2a6c;
+            transition: width 0.3s;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+
+        .sidebar.expanded {
+            width: 200px;
+            /* ancho cuando se despliega */
+        }
+
+        /* Botón de toggle */
+        .toggle-btn {
+            background: #111;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* Lista de iconos/menú */
+        .menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu li {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .menu li:hover {
+            background: #2a3f9d;
+        }
+
+        .menu i {
+            margin-right: 10px;
+            font-size: 20px;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        /* Contenido principal */
+        .content {
+            margin-left: 60px;
+            /* espacio por sidebar */
+            padding: 20px;
+            transition: margin-left 0.3s;
+            width: 100%;
+        }
+
+        .sidebar.expanded~.content {
+            margin-left: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+        <ul class="menu">
+            <li><i>🐱</i> <span>Inicio</span></li>
+            <li><i>💬</i> <span>Chat</span></li>
+            <li><i>👥</i> <span>Equipos</span></li>
+            <li><i>🏅</i> <span>Ranking</span></li>
+            <li><i>📅</i> <span>Calendario</span></li>
+        </ul>
+    </div>
+
+    <!-- Contenido -->
+    <div class="content">
+        <h1>Bienvenido a Class HUB</h1>
+        <p>Contenido principal aquí.</p>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("expanded");
+        }
+    </script>
+</body>
+
+</html>
