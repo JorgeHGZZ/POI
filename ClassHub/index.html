@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
 <body>
     <nav>
         <div class="logo">
-            <img src="src/img/ClassHUB.png" alt="">
+            <img src="../ClassHub/src/img/ClassHUB.png" alt="">
         </div>
     </nav>
     <div class="sidebar">
@@ -28,42 +28,94 @@
     </div>
     <div class="barra-espacio">
         <h2>Grupos</h2>
+        <button id="abrir" class="nuevoGrupo"><i class="fa-solid fa-plus"></i>Crear Grupo</button>
     </div>
     </div>
     <div class="main-content">
         <div class="grupos-container">
-            <div class="grupo-card">
-                <div class="card-item">
-                    <p>C1</p>
+            <a href="grupo.html" class="grupo-link">
+                <div class="grupo-card">
+                    <div class="card-item">
+                        <p>C1</p>
+                    </div>
+                    <h2>MTY Curso Trading 2025</h2>
                 </div>
-                <h2>MTY Curso Trading 2025</h2>
-            </div>
-            <div class="grupo-card">
-                <div class="card-item">
-                    <p>C1</p>
+            </a>
+            <a href="grupo.html" class="grupo-link">
+                <div class="grupo-card">
+                    <div class="card-item">
+                        <p>C1</p>
+                    </div>
+                    <h2>MTY Curso Trading 2025</h2>
                 </div>
-                <h2>MTY Curso Trading 2025</h2>
-            </div>
-            <div class="grupo-card">
-                <div class="card-item">
-                    <p>C1</p>
+            </a>
+            <a href="grupo.html" class="grupo-link">
+                <div class="grupo-card">
+                    <div class="card-item">
+                        <p>C1</p>
+                    </div>
+                    <h2>MTY Curso Trading 2025</h2>
                 </div>
-                <h2>MTY Curso Trading 2025</h2>
-            </div>
-            <div class="grupo-card">
-                <div class="card-item">
-                    <p>C1</p>
+            </a>
+            <a href="grupo.html" class="grupo-link">
+                <div class="grupo-card">
+                    <div class="card-item">
+                        <p>C1</p>
+                    </div>
+                    <h2>MTY Curso Trading 2025</h2>
                 </div>
-                <h2>MTY Curso Trading 2025</h2>
-            </div>
-            <div class="grupo-card">
-                <div class="card-item">
-                    <p>C1</p>
+            </a>
+            <a href="grupo.html" class="grupo-link">
+                <div class="grupo-card">
+                    <div class="card-item">
+                        <p>C1</p>
+                    </div>
+                    <h2>MTY Curso Trading 2025</h2>
                 </div>
-                <h2>MTY Curso Trading 2025</h2>
-            </div>
+            </a>
         </div>
+        <dialog id="miModal" class="modalCrear">
+            <div class="modal-header">
+                <h2>Nueva Grupo</h2>
+                <i id="cerrar" class="fa-solid fa-circle-xmark fa-xl"></i>
+            </div>
+            <div class="modal-body">
+                <!-- Nombre del grupo -->
+                <div style="grid-column: span 2;">
+                    <label>Nombre del grupo</label>
+                    <input type="text">
+                </div>
+                <!-- Descripción -->
+                <div class="descripcion">
+                    <label>Descripcion</label>
+                    <textarea rows="6"></textarea>
+                    <div class="imagen-upload">
+                        <label>Imagen</label>
+                        <div class="upload-box">↑</div>
+                    </div>
+                </div>
+                <!-- Buscar miembros -->
+                <div class="partemiembros">
+                    <label>Buscar Miembros</label>
+                    <input type="text">
+                    <div class="miembros">
+                        <div class="avatar">
+                            <img src="https://i.pravatar.cc/40?img=1" alt="usuario">
+                            <span class="estado online"></span>
+                        </div>
+                        <div class="avatar">
+                            <img src="https://i.pravatar.cc/40?img=2" alt="usuario">
+                            <span class="estado offline"></span>
+                        </div>
+                        <div class="avatar">
+                            <img src="https://i.pravatar.cc/40?img=3" alt="usuario">
+                            <span class="estado busy"></span>
+                        </div>
+                    </div>
+                </div>
+        </dialog>
     </div>
+    <script src="src/js/index.js"></script>
 </body>
 
 </html>
