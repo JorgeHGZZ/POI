@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="src/css/grupo.css">
+</head>
+</head>
+
+<body>
+    <nav>
+        <div class="logo">
+            <img src="../ClassHub/src/img/ClassHUB.png" alt="">
+        </div>
+    </nav>
+    <div class="barra-espacio">
+        <a href="chatGrupo.html">
+            <h2 class="active">Chat</h2>
+        </a>
+        <a href="tareaGrupo.html">
+            <h2 class="unactive">Tarea</h2>
+        </a>
+    </div>
+    <div class="layout-container">
+        <div class="sidebar">
+            <ul class="menu">
+                <!--Icono de usuario -->
+                <li><a href="profile.html"><img src="src/img/turboruca.webp" alt=""></a></li>
+                <li><a href="chat.html"><i class="fa-solid fa-message fa-2xl"></i></a></li>
+                <li><a href="teams.html"><i class="fa-solid fa-people-group fa-2xl"></i></a></li>
+                <li><a href="recompensas.html"><i class="fa-solid fa-medal fa-2xl"></i></a></li>
+                <li><a href="settings.html"><i class="fa-solid fa-calendar-days fa-2xl"></i></a></li>
+                <li><a href=""><i class="fa-solid fa-right-from-bracket"></i></a></li>
+            </ul>
+        </div>
+        <div class="barra-datos">
+            <div class="grupo-item">
+                <p>C1</p>
+            </div>
+            <h2>Grupo 1</h2>
+            <div class="Canales">
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="chat-container">
+                <div class="message left">
+                    <div class="avatar-container">
+                        <img src="src/img/lado.jpg" class="avatar">
+                        <span class="status online"></span>
+                    </div>
+                    <div class="bubble">¡Hola! 👋</div>
+                </div>
+                <div class="message left">
+                    <div class="avatar-container">
+                        <img src="src/img/tanjiro.jpg" class="avatar">
+                        <span class="status offline"></span>
+                    </div>
+                    <div class="bubble">¿Cómo están?</div>
+                </div>
+                <div class="message right">
+                    <div class="bubble">Todo bien 😃</div>
+                    <div class="avatar-container">
+                        <img src="src/img/turboruca.webp" class="avatar">
+                        <span class="status online"></span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="chat-input">
+                <input type="text" id="chatText" placeholder="Escribe un mensaje...">
+                <!-- Botón de adjuntar -->
+                <div class="attach-container">
+                    <button id="attachBtn" class="icon-btn">
+                        <i class="fa-solid fa-paperclip"></i>
+                    </button>
+                    <!-- Dropdown oculto -->
+                    <div class="options-dropdown" id="optionsDropdown">
+                        <button><i class="fa-solid fa-location-dot"></i></button>
+                        <button><i class="fa-solid fa-folder"></i></button>
+                        <button><i class="fa-solid fa-image"></i></button>
+                    </div>
+                </div>
+                <button class="icon-btn"><i class="fa-solid fa-microphone"></i></button>
+                <button class="send-btn"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="src/js/chatGrupo.js"></script>
+</body>
+
+</html>
