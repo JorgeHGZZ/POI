@@ -7,6 +7,10 @@
     <title>Grupo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="src/css/grupo.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/img/favicon-16x16.png">
+    <link rel="manifest" href="/src/img/site.webmanifest">
 </head>
 </head>
 
@@ -23,6 +27,10 @@
         <a href="tareaGrupo.html">
             <h2 class="unactive">Tarea</h2>
         </a>
+        <button class="back-button" onclick="window.history.back();">
+            <i class="fas fa-angle-left"></i>
+            Volver
+        </button>
     </div>
     <div class="layout-container">
         <div class="sidebar">
@@ -41,7 +49,15 @@
                 <p>C1</p>
             </div>
             <h2>Grupo 1</h2>
-            <div class="Canales">
+            <div class="canales">
+                <div class="texto">
+                    <h4>Chat</h4>
+                    <p class="selected">General</p>
+                </div>
+                <div class="llamada">
+                    <h4>Llamada</h4>
+                    <p>General</p>
+                </div>
             </div>
         </div>
 
@@ -52,7 +68,7 @@
                         <img src="src/img/lado.jpg" class="avatar">
                         <span class="status online"></span>
                     </div>
-                    <div class="bubble">¡Hola! 👋</div>
+                    <div class="bubble">¡Hola!</div>
                 </div>
                 <div class="message left">
                     <div class="avatar-container">
@@ -62,7 +78,7 @@
                     <div class="bubble">¿Cómo están?</div>
                 </div>
                 <div class="message right">
-                    <div class="bubble">Todo bien 😃</div>
+                    <div class="bubble">Todo bien</div>
                     <div class="avatar-container">
                         <img src="src/img/turboruca.webp" class="avatar">
                         <span class="status online"></span>

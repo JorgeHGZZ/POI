@@ -1,11 +1,36 @@
 @import url('variablesbarra.css');
 
+
+.canales {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.canales .h4 {
+    justify-content: flex-start;
+}
+
+.canales p {
+    padding-left: 20px;
+    cursor: pointer;
+
+}
+.canales .selected {
+    background: var(--colorB);
+    border-radius: 12px;
+    padding: 5px 10px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
 .chat-container {
     display: flex;
     flex-direction: column;
     height: 93vh;
     background-size: cover;
-    margin-bottom:0
+    margin-bottom: 0
 }
 
 /* Mensajes */
@@ -16,12 +41,14 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+
 }
 
 .message {
     display: flex;
     align-items: center;
     gap: 8px;
+    margin-bottom: 10px;
 }
 
 .message.left {
@@ -41,16 +68,17 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    object-fit: cover;  
-    border: 2px solid #fff;
+    object-fit: cover;
 }
 
 .online {
     background: var(--color6);
 }
+
 .offline {
     background: var(--offline);
 }
+
 .busy {
     background: var(--ocupado);
 }
@@ -59,8 +87,8 @@
     padding: 10px 14px;
     border-radius: 18px;
     max-width: 60%;
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 25px;
+    line-height: 1.6;
 }
 
 .left .bubble {
@@ -115,7 +143,7 @@
     cursor: pointer;
 }
 
-.chat-input i{
+.chat-input i {
     font-size: 30px;
 }
 
@@ -157,7 +185,9 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     z-index: 100;
 }
-
+.options-dropdown.open {
+    display: flex;
+}
 .options-dropdown button {
     background: none;
     border: none;
@@ -166,12 +196,11 @@
     cursor: pointer;
 }
 
-.estado {
+.status {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 12px;
-    height: 12px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
-    border: 2px solid #3f3f3f;
 }
