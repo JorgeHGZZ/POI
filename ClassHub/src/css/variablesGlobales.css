@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 :root {
     --color1: #232f70;
     --color3: #2a398d;
@@ -9,7 +10,7 @@
     --color6: #3cac3b;
     --color7: #323535;
     --offline: #F44336;
-    --ocupado:#FFC107;
+    --ocupado: #FFC107;
 }
 
 body {
@@ -19,28 +20,42 @@ body {
     font-family: "Poppins", sans-serif;
 }
 
-nav {
-    background-image: url("../img/fondo-logo.png");
-    color: white;
-    padding: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    z-index: 20;
-    width: 100%;
-    top: 0;
-}
-.logo img {
-    height: 50px;
-    margin-top: 10px;
+@media only screen and (min-width: 1200px) {
+    nav {
+        background-image: url("../img/fondo-logo.png");
+        color: white;
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        z-index: 20;
+        width: 100%;
+        top: 0;
+    }
+
+    .logo img {
+        height: 50px;
+        margin-top: 10px;
+    }
 }
 
 @media only screen and (max-width: 575px) {
     nav {
+        background-image: url("../img/fondo-logo.png");
+        color: white;
         padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        z-index: 20;
+        width: 100%;
+        top: 0;
     }
+
     .logo img {
         height: 30px;
+        margin-top: 10px;
     }
 }
