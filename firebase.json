@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "Classhub",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
