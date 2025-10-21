@@ -40,10 +40,11 @@ body {
     }
 }
 
-@media only screen and (max-width: 575px) {
+@media only screen and (max-width: 595px) {
     nav {
         background-image: url("../img/fondo-logo.png");
         color: white;
+        height: 60px;
         padding: 5px;
         display: flex;
         align-items: center;
