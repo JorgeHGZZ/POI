@@ -16,7 +16,7 @@ class Chat {
         };
 
         this.init();
-        this.presences
+        this.presences = {};
     }
 
     init() {
@@ -58,88 +58,31 @@ class Chat {
             if (e.key === "Enter") this.enviarMensaje();
         });
 
+        // Mejorar detección de cambio de ventana
         document.addEventListener("visibilitychange", () => {
             const status = document.visibilityState === "hidden" ? "offline" : "online";
             this.updatePresence(status);
         });
 
-        window.addEventListener("beforeunload", () => this.handleBeforeUnload());
+        // Detectar cuando la ventana pierde el foco
+        window.addEventListener("blur", () => {
+            this.updatePresence("offline");
+        });
 
-        // Añadir listener para el botón de ubicación
+        // Detectar cuando la ventana recupera el foco
+        window.addEventListener("focus", () => {
+            this.updatePresence("online");
+        });
+
+
+
+        window.addEventListener("beforeunload", () => this.handleBeforeUnload());
         document.getElementById('locationBtn').addEventListener('click', () => {
             this.enviarUbicacion();
             // Cerrar el dropdown después de clickear
             document.getElementById('optionsDropdown').classList.remove('open');
         });
     }
-
-    enviarUbicacion() {
-        if (!navigator.geolocation) {
-            alert('Tu navegador no soporta geolocalización');
-            return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const { latitude, longitude } = position.coords;
-                const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-
-                push(this.mensajesRef, {
-                    uid: this.usuarioActual.uid,
-                    usuario: this.usuarioActual.nombre,
-                    mensaje: `📍 <a href="${googleMapsUrl}" target="_blank">Ver ubicación en Google Maps</a>`,
-                    isLocation: true,
-                    coords: { latitude, longitude },
-                    avatar: this.usuarioActual.foto,
-                    timestamp: Date.now()
-                });
-            },
-            (error) => {
-                console.error('Error getting location:', error);
-                alert('No se pudo obtener la ubicación');
-            }
-        );
-    }
-
-    renderMessage(msg, esPropio, msgUid) {
-        const msgDiv = document.createElement("div");
-        msgDiv.classList.add("message", esPropio ? "right" : "left");
-
-        const dataUidAttr = msgUid || msg.usuario || '';
-        const avatar = msg.avatar || 'src/img/default-avatar.png';
-        const presence = this.presences[dataUidAttr];
-        const status = presence?.status || 'offline';
-
-        // El mensaje puede ser HTML si es una ubicación
-        const messageContent = msg.isLocation ? msg.mensaje : this.escapeHtml(msg.mensaje);
-
-        if (esPropio) {
-            msgDiv.innerHTML = `
-                <div class="bubble propio">${messageContent}</div>
-                <div class="avatar-container" data-uid="${dataUidAttr}">
-                    <img src="${avatar}" class="avatar">
-                    <span class="status ${status}"></span>
-                </div>`;
-        } else {
-            msgDiv.innerHTML = `
-                <div class="avatar-container" data-uid="${dataUidAttr}">
-                    <img src="${avatar}" class="avatar">
-                    <span class="status ${status}"></span>
-                </div>
-                <div class="bubble"><b>${msg.usuario || 'Usuario'}:</b> ${messageContent}</div>`;
-        }
-
-        this.chatBox.appendChild(msgDiv);
-        this.chatBox.scrollTop = this.chatBox.scrollHeight;
-    }
-
-    // Método auxiliar para escapar HTML y prevenir XSS
-    escapeHtml(text) {
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-
 
     setupPresence() {
         // Escuchar el estado de conexión
@@ -164,6 +107,7 @@ class Chat {
             this.updateAllPresenceStates();
         });
     }
+
     updateAllPresenceStates() {
         document.querySelectorAll('.avatar-container').forEach(container => {
             const uid = container.getAttribute('data-uid');
@@ -175,7 +119,6 @@ class Chat {
             }
         });
     }
-
 
     updatePresence(status) {
         return set(this.presRef, {
