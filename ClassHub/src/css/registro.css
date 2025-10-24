@@ -1,0 +1,213 @@
+@import url('variablesGlobales.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--colorB);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    background-image: url("../img/Recompensas.png");
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 70%;
+    padding: 40px;
+    color: var(--color_texto);
+    align-items: center;
+    border: solid;
+    border-image: linear-gradient(90deg, rgba(60, 172, 59, 1) 0%, rgba(42, 57, 141, 1) 50%, rgba(230, 29, 37, 1) 100%) 1 / 5px;
+    border-radius: 10px;
+}
+
+.title {
+    text-align: center;
+    margin: 0 auto;
+    width: fit-content;
+    margin-bottom: 40px;
+}
+
+.title h1 {
+    font-size: 48px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 60px;
+}
+
+.left-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.left-section h2 {
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 30px;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid;
+    border-image: linear-gradient(135deg, rgba(60, 172, 59, 1) 0%, rgba(42, 57, 141, 1) 50%, rgba(230, 29, 37, 1) 100%) 1;
+    overflow: hidden;
+    margin-bottom: 30px;
+    background: linear-gradient(180deg, #87ceeb 0%, #87ceeb 50%, #90ee90 50%, #90ee90 100%);
+    position: relative;
+}
+
+.profile-pic::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.upload-btn {
+    padding: 12px 30px;
+    background: linear-gradient(90deg, rgba(60, 172, 59, 1) 0%, rgba(42, 57, 141, 1) 50%, rgba(230, 29, 37, 1) 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.upload-btn:hover {
+    transform: scale(1.05);
+}
+
+.dside {
+    flex: 1;
+    margin-top: 0;
+    align-self: flex-start;
+}
+
+.dside h3 {
+    font-size: 24px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    color: var(--color7);
+    opacity: 0.9;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+input:focus {
+    outline: none;
+    border-color: rgba(60, 172, 59, 0.8);
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 1;
+}
+
+input[type="submit"] {
+    padding: 12px;
+    background: linear-gradient(90deg, rgba(60, 172, 59, 1) 0%, rgba(42, 57, 141, 1) 50%, rgba(230, 29, 37, 1) 100%);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: transform 0.2s;
+}
+
+input[type="submit"]:hover {
+    transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+    .content-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .container {
+        width: 90%;
+    }
+}
+
+.mensaje-error,
+.mensaje-exito {
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+    animation: aparecer 0.3s ease;
+}
+
+.mensaje-error {
+    background: rgba(230, 29, 37, 0.9);
+    color: white;
+    border: 1px solid rgba(230, 29, 37, 1);
+}
+
+.mensaje-exito {
+    background: rgba(60, 172, 59, 0.9);
+    color: white;
+    border: 1px solid rgba(60, 172, 59, 1);
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

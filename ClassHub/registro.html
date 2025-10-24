@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGISTRO</title>
+    <link rel="stylesheet" href="src/css/registro.css">
+    <script src="src/js/registro.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>REGISTRO</h1>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="left-section">
+                <h2>Imagen de perfil</h2>
+                <div class="profile-pic"></div>
+                <button class="upload-btn">Agregar foto</button>
+            </div>
+
+            <div class="dside">
+                <h3>Información</h3>
+                <form>
+                    <input type="text" id="fname" name="fname" placeholder="usuario" required>
+                    <input type="email" id="email" name="email" placeholder="correo" required>
+                    <input type="password" id="password" name="password" placeholder="contraseña" required>
+                    <input type="password" id="confirm" name="confirm" placeholder="confirmar contraseña" required>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
