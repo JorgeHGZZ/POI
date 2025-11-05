@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba API Grupos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+        
+        pre {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Prueba de API de Grupos</h1>
+        
+        <!-- PASO 1: Crear usuarios de prueba -->
+        <div class="test-section">
+            <h2>📝 Paso 1: Crear Usuarios de Prueba</h2>
+            <p style="margin-bottom: 15px;">Primero necesitamos usuarios para crear grupos</p>
+            <button onclick="crearUsuariosPrueba()">Crear 5 Usuarios de Prueba</button>
+            <div id="result1" class="result" style="display:none;"></div>
+        </div>
+        
+        <!-- PASO 2: Crear grupo grupal -->
+        <div class="test-section">
+            <h2>👥 Paso 2: Crear Grupo Grupal (Mínimo 3 personas)</h2>
+            
+            <div class="form-group">
+                <label>Nombre del Grupo:</label>
+                <input type="text" id="nombreGrupo" value="Mundial 2026 - Grupo A" placeholder="Ej: Mundial 2026 - Grupo A">
+            </div>
+            
+            <div class="form-group">
+                <label>Creador (ID Usuario):</label>
+                <input type="number" id="creadorGrupo" value="1" min="1">
+            </div>
+            
+            <div class="form-group">
+                <label>Selecciona los miembros (mínimo 3 incluyendo el creador):</label>
+                <div id="usuariosLista" class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="user1" value="1" checked>
+                        <label for="user1">Usuario 1</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="user2" value="2" checked>
+                        <label for="user2">Usuario 2</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="user3" value="3" checked>
+                        <label for="user3">Usuario 3</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="user4" value="4">
+                        <label for="user4">Usuario 4</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="user5" value="5">
+                        <label for="user5">Usuario 5</label>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="crearGrupoGrupal()">Crear Grupo Grupal</button>
+            <div id="result2" class="result" style="display:none;"></div>
+        </div>
+        
+        <!-- PASO 3: Crear chat privado -->
+        <div class="test-section">
+            <h2>💬 Paso 3: Crear Chat Privado (2 personas)</h2>
+            
+            <div class="form-group">
+                <label>Usuario 1:</label>
+                <input type="number" id="privado1" value="1" min="1">
+            </div>
+            
+            <div class="form-group">
+                <label>Usuario 2:</label>
+                <input type="number" id="privado2" value="2" min="1">
+            </div>
+            
+            <button onclick="crearChatPrivado()">Crear Chat Privado</button>
+            <div id="result3" class="result" style="display:none;"></div>
+        </div>
+        
+        <!-- PASO 4: Ver grupos de usuario -->
+        <div class="test-section">
+            <h2>📋 Paso 4: Ver Grupos de un Usuario</h2>
+            
+            <div class="form-group">
+                <label>ID del Usuario:</label>
+                <input type="number" id="verGruposUsuario" value="1" min="1">
+            </div>
+            
+            <button onclick="verGruposUsuario()">Ver Mis Grupos</button>
+            <div id="result4" class="result" style="display:none;"></div>
+        </div>
+        
+        <!-- PASO 5: Probar validaciones -->
+        <div class="test-section">
+            <h2>⚠️ Paso 5: Probar Validaciones</h2>
+            <p style="margin-bottom: 15px;">Estas pruebas deben FALLAR para verificar que las validaciones funcionan:</p>
+            
+            <button onclick="probarGrupoMenos3()" style="background: #dc3545;">
+                Intentar crear grupo con menos de 3 personas
+            </button>
+            
+            <button onclick="probarChatPrivadoDuplicado()" style="background: #dc3545; margin-left: 10px;">
+                Intentar duplicar chat privado
+            </button>
+            
+            <div id="result5" class="result" style="display:none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = './api/grupos.php';
+        
+        // PASO 1: Crear usuarios de prueba
+        async function crearUsuariosPrueba() {
+            const result = document.getElementById('result1');
+            result.style.display = 'block';
+            result.innerHTML = '⏳ Creando usuarios...';
+            
+            try {
+                // Aquí insertamos usuarios directamente en la BD
+                const response = await fetch('crear_usuarios_prueba.php');
+                const data = await response.json();
+                
+                if(data.success) {
+                    result.className = 'result success';
+                    result.innerHTML = `
+                        ✅ ${data.message}
+                        <pre>${JSON.stringify(data.usuarios, null, 2)}</pre>
+                    `;
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `❌ Error: ${data.message}`;
+                }
+            } catch(error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        // PASO 2: Crear grupo grupal
+        async function crearGrupoGrupal() {
+            const result = document.getElementById('result2');
+            result.style.display = 'block';
+            result.innerHTML = '⏳ Creando grupo...';
+            
+            const nombre = document.getElementById('nombreGrupo').value;
+            const creador = parseInt(document.getElementById('creadorGrupo').value);
+            
+            // Obtener miembros seleccionados
+            const checkboxes = document.querySelectorAll('#usuariosLista input[type="checkbox"]:checked');
+            const miembros = Array.from(checkboxes).map(cb => parseInt(cb.value));
+            
+            const data = {
+                nombre: nombre,
+                creador_id: creador,
+                miembros: miembros,
+                tipo: 'grupal'
+            };
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                
+                const respuesta = await response.json();
+                
+                if(respuesta.success) {
+                    result.className = 'result success';
+                    result.innerHTML = `
+                        ✅ ${respuesta.message}
+                        <pre>${JSON.stringify(respuesta.grupo, null, 2)}</pre>
+                    `;
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `❌ ${respuesta.message}`;
+                }
+            } catch(error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        // PASO 3: Crear chat privado
+        async function crearChatPrivado() {
+            const result = document.getElementById('result3');
+            result.style.display = 'block';
+            result.innerHTML = '⏳ Creando chat privado...';
+            
+            const user1 = parseInt(document.getElementById('privado1').value);
+            const user2 = parseInt(document.getElementById('privado2').value);
+            
+            const data = {
+                nombre: `Chat Privado`,
+                creador_id: user1,
+                miembros: [user1, user2],
+                tipo: 'privado'
+            };
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                
+                const respuesta = await response.json();
+                
+                if(respuesta.success) {
+                    result.className = 'result success';
+                    result.innerHTML = `
+                        ✅ ${respuesta.message}
+                        <pre>${JSON.stringify(respuesta.grupo, null, 2)}</pre>
+                    `;
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `❌ ${respuesta.message}`;
+                }
+            } catch(error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        // PASO 4: Ver grupos de usuario
+        async function verGruposUsuario() {
+            const result = document.getElementById('result4');
+            result.style.display = 'block';
+            result.innerHTML = '⏳ Obteniendo grupos...';
+            
+            const userId = document.getElementById('verGruposUsuario').value;
+            
+            try {
+                const response = await fetch(`${API_URL}?usuario_id=${userId}`);
+                const respuesta = await response.json();
+                
+                if(respuesta.success) {
+                    result.className = 'result success';
+                    result.innerHTML = `
+                        ✅ Grupos encontrados: ${respuesta.grupos.length}
+                        <pre>${JSON.stringify(respuesta.grupos, null, 2)}</pre>
+                    `;
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `❌ ${respuesta.message}`;
+                }
+            } catch(error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        // PASO 5a: Probar grupo con menos de 3 personas
+        async function probarGrupoMenos3() {
+            const result = document.getElementById('result5');
+            result.style.display = 'block';
+            result.innerHTML = '⏳ Probando validación...';
+            
+            const data = {
+                nombre: 'Grupo Inválido',
+                creador_id: 1,
+                miembros: [1, 2], // Solo 2 personas
+                tipo: 'grupal'
+            };
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                
+                const respuesta = await response.json();
+                
+                if(!respuesta.success) {
+                    result.className = 'result success';
+                    result.innerHTML = `
+                        ✅ Validación funcionando correctamente!
+                        <p><strong>Error esperado:</strong> ${respuesta.message}</p>
+                        <pre>${JSON.stringify(respuesta, null, 2)}</pre>
+                    `;
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `❌ La validación NO está funcionando. Se creó un grupo con menos de 3 personas.`;
+                }
+            } catch(error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+        
+        // PASO 5b: Probar chat privado duplicado
+        async function probarChatPrivadoDuplicado() {
+            const result = document.getElementById('result5');
+            result.style.display = 'block';
+            result.innerHTML = '⏳ Probando validación...';
+            
+            // Primero crear un chat privado
+            const data = {
+                nombre: 'Chat Privado',
+                creador_id: 1,
+                miembros: [1, 2],
+                tipo: 'privado'
+            };
+            
+            try {
+                // Primer intento
+                await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                
+                // Segundo intento (debería fallar)
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+                
+                const respuesta = await response.json();
+                
+                if(!respuesta.success) {
+                    result.className = 'result success';
+                    result.innerHTML = `
+                        ✅ Validación funcionando correctamente!
+                        <p><strong>Error esperado:</strong> ${respuesta.message}</p>
+                        <pre>${JSON.stringify(respuesta, null, 2)}</pre>
+                    `;
+                } else {
+                    result.className = 'result error';
+                    result.innerHTML = `❌ La validación NO está funcionando. Se permitió crear un chat duplicado.`;
+                }
+            } catch(error) {
+                result.className = 'result error';
+                result.innerHTML = `❌ Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
