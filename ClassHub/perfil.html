@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - ClassHub</title>
+    <link rel="stylesheet" href="css/perfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul class="menu">
+            <li><a href="perfil.html"><i class="fa-solid fa-user fa-2x"></i></a></li>
+            <li><a href="grupos.html"><i class="fa-solid fa-users fa-2x"></i></a></li>
+            <li><a href="#"><i class="fa-solid fa-trophy fa-2x"></i></a></li>
+            <li><a href="#"><i class="fa-solid fa-calendar fa-2x"></i></a></li>
+        </ul>
+    </nav>
+
+    <!-- Barra superior -->
+    <div class="barra-espacio">
+        <h2>Class<span style="color: var(--color2);">HUB</span></h2>
+    </div>
+
+    <!-- Contenido principal - Perfil -->
+    <main class="main-content">
+        <div class="perfil-container">
+            <h1 class="perfil-titulo">Mi Perfil</h1>
+            
+            <div class="perfil-content">
+                <!-- Columna izquierda -->
+                <div class="perfil-columna">
+                    <div class="perfil-campo">
+                        <label>Nombre de usuario</label>
+                        <input type="text" id="nombre-usuario" value="" placeholder="Tu nombre de usuario" disabled>
+                    </div>
+
+                    <div class="perfil-campo">
+                        <label>Correo electrónico</label>
+                        <input type="email" id="correo" value="" placeholder="correo@ejemplo.com" disabled>
+                    </div>
+
+                    <div class="perfil-campo">
+                        <label>Fecha de registro</label>
+                        <input type="text" id="fecha-registro" value="" disabled>
+                    </div>
+
+                    <div class="perfil-campo">
+                        <label>Equipo favorito</label>
+                        <input type="text" id="equipo-favorito" value="" placeholder="Nombre del equipo" disabled>
+                    </div>
+
+                    <div class="perfil-campo">
+                        <label>Selección que apoya</label>
+                        <input type="text" id="seleccion" value="" placeholder="País de tu selección" disabled>
+                    </div>
+                </div>
+
+                <!-- Columna derecha -->
+                <div class="perfil-columna">
+                    <div class="perfil-campo">
+                        <label>Puntos acumulados</label>
+                        <input type="text" id="puntos" value="" disabled>
+                    </div>
+
+                    <div class="perfil-campo">
+                        <label>Nivel o rango actual</label>
+                        <input type="text" id="nivel" value="" disabled>
+                    </div>
+
+                    <div class="perfil-campo">
+                        <label>Grupos en los que participa</label>
+                        <input type="text" id="grupos" value="" disabled>
+                    </div>
+
+                    <div class="perfil-campo">
+                        <label>Contraseña</label>
+                        <input type="password" id="contrasena" value="********" placeholder="Nueva contraseña" disabled>
+                    </div>
+                </div>
+
+                <!-- Imagen de perfil -->
+                <div class="perfil-imagen">
+                    <div class="imagen-avatar">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <input type="file" id="upload-foto" accept="image/*" style="display: none;">
+                    <button class="btn-cambiar-foto" onclick="document.getElementById('upload-foto').click()">
+                        <i class="fa-solid fa-camera"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="perfil-botones">
+                <button class="btn-editar" id="btn-editar">Editar perfil</button>
+                <button class="btn-guardar" id="btn-guardar">Guardar cambios</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/perfil.js"></script>
+</body>
+</html>

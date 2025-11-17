@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Variables CSS */
+:root {
+    --color1: #232f70;
+    --color3: #2a398d;
+    --color2: #38b6ff;
+    --color_texto: #f0f0f0;
+    --colorB: #474a4a;
+    --color5: #555757;
+    --color6: #3cac3b;
+    --color7: #323535;
+    --offline: #F44336;
+    --ocupado: #FFC107;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: var(--color7);
+}
+
+/* Sidebar */
+.sidebar {
+    height: 100vh;
+    width: 80px;
+    background-color: var(--color1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30;
+}
+
+.menu {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.menu li {
+    margin: 20px 0;
+}
+
+.menu a {
+    text-decoration: none;
+}
+
+.fa-solid {
+    color: var(--color_texto);
+    transition: color 0.3s;
+}
+
+.fa-solid:hover {
+    color: var(--color2);
+    cursor: pointer;
+}
+
+/* Barra superior */
+.barra-espacio {
+    margin-top: 0;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    z-index: 20;
+    background-color: var(--colorB);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.barra-espacio h2 {
+    margin-left: 120px;
+    color: var(--color_texto);
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* Contenido principal */
+.main-content {
+    background-color: var(--color7);
+    min-height: 100vh;
+    margin-left: 80px;
+    padding-top: 100px;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 50px;
+}
+
+/* Contenedor del perfil */
+.perfil-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.perfil-titulo {
+    color: var(--color_texto);
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Contenido del perfil */
+.perfil-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr 200px;
+    gap: 40px;
+    background-color: var(--color5);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Columnas de información */
+.perfil-columna {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* Campos del perfil */
+.perfil-campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.perfil-campo label {
+    color: var(--color_texto);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.perfil-campo input {
+    width: 100%;
+    height: 45px;
+    border: none;
+    border-radius: 12px;
+    padding: 12px;
+    background: #888888;
+    color: var(--color_texto);
+    font-size: 1rem;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+}
+
+.perfil-campo input:disabled {
+    background: #888888;
+    color: var(--color_texto);
+    cursor: not-allowed;
+}
+
+.perfil-campo input:not(:disabled) {
+    background: #bcbcbc;
+    color: #000;
+    cursor: text;
+}
+
+.perfil-campo input:focus:not(:disabled) {
+    background: #d0d0d0;
+    box-shadow: 0 0 0 3px rgba(56, 182, 255, 0.3);
+}
+
+/* Imagen de perfil */
+.perfil-imagen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.imagen-avatar {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid var(--color2);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, #87CEEB 0%, #98D8C8 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imagen-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imagen-avatar i {
+    font-size: 80px;
+    color: white;
+}
+
+.btn-cambiar-foto {
+    background-color: var(--color2);
+    color: var(--color_texto);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-cambiar-foto:hover {
+    background-color: var(--color3);
+    transform: scale(1.1);
+}
+
+.btn-cambiar-foto:active {
+    transform: scale(0.95);
+}
+
+/* Botones de acción */
+.perfil-botones {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn-editar,
+.btn-guardar {
+    padding: 15px 40px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.btn-editar {
+    background-color: var(--color2);
+    color: var(--color_texto);
+}
+
+.btn-editar:hover {
+    background-color: var(--color3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.btn-guardar {
+    background-color: var(--color6);
+    color: var(--color_texto);
+    display: none;
+}
+
+.btn-guardar:hover {
+    background-color: #2d8f2c;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+.btn-editar:active,
+.btn-guardar:active {
+    transform: scale(0.95);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .perfil-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+    }
+
+    .perfil-imagen {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .perfil-content {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .perfil-titulo {
+        font-size: 2rem;
+    }
+
+    .barra-espacio h2 {
+        font-size: 24px;
+        margin-left: 10%;
+    }
+
+    .main-content {
+        padding-top: 100px;
+    }
+}
