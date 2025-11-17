@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-/* Variables CSS */
 :root {
     --color1: #232f70;
     --color3: #2a398d;
@@ -25,7 +24,24 @@ body {
     background-color: var(--color7);
 }
 
-/* Sidebar */
+nav {
+    background-image: url("../img/fondo-logo.png");
+    color: white;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 20;
+    width: 100%;
+    top: 0;
+}
+
+.logo img {
+    height: 50px;
+    margin-top: 10px;
+}
+
 .sidebar {
     height: 100vh;
     width: 80px;
@@ -54,6 +70,12 @@ body {
     text-decoration: none;
 }
 
+.menu img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
 .fa-solid {
     color: var(--color_texto);
     transition: color 0.3s;
@@ -64,52 +86,47 @@ body {
     cursor: pointer;
 }
 
-/* Barra superior */
 .barra-espacio {
-    margin-top: 0;
+    margin-top: 70px;
     width: 100%;
-    height: 70px;
+    height: 5dvh;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     position: fixed;
     z-index: 20;
     background-color: var(--colorB);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 31px 36px 50px -15px rgba(0, 0, 0, 0.40);
+    -webkit-box-shadow: 31px 36px 50px -15px rgba(0, 0, 0, 0.40);
+    -moz-box-shadow: 31px 36px 50px -15px rgba(0, 0, 0, 0.40);
 }
 
 .barra-espacio h2 {
-    margin-left: 120px;
+    margin-left: 7%;
     color: var(--color_texto);
     font-size: 30px;
     font-weight: bold;
+    line-height: 1dvh;
 }
 
-/* Contenido principal */
 .main-content {
-    background-color: var(--color7);
+    background-color: var(--color_texto);
     min-height: 100vh;
     margin-left: 80px;
-    padding-top: 100px;
-    padding-left: 3%;
+    position: relative;
+    z-index: 10;
+    padding-top: 9%;
+    padding-left: 2%;
     padding-right: 3%;
     padding-bottom: 50px;
+    background-image: url("../img/Recompensas.png");
 }
 
-/* Contenedor del perfil */
 .perfil-container {
     max-width: 1400px;
     margin: 0 auto;
 }
 
-.perfil-titulo {
-    color: var(--color_texto);
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-    text-align: center;
-}
-
-/* Contenido del perfil */
 .perfil-content {
     display: grid;
     grid-template-columns: 1fr 1fr 200px;
@@ -120,14 +137,12 @@ body {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Columnas de información */
 .perfil-columna {
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
 
-/* Campos del perfil */
 .perfil-campo {
     display: flex;
     flex-direction: column;
@@ -170,7 +185,6 @@ body {
     box-shadow: 0 0 0 3px rgba(56, 182, 255, 0.3);
 }
 
-/* Imagen de perfil */
 .perfil-imagen {
     display: flex;
     flex-direction: column;
@@ -225,7 +239,6 @@ body {
     transform: scale(0.95);
 }
 
-/* Botones de acción */
 .perfil-botones {
     display: flex;
     justify-content: center;
@@ -274,7 +287,6 @@ body {
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.4);
 }
 
-/* Responsive */
 @media (max-width: 1200px) {
     .perfil-content {
         grid-template-columns: 1fr 1fr;
@@ -292,10 +304,6 @@ body {
     .perfil-content {
         grid-template-columns: 1fr;
         padding: 20px;
-    }
-
-    .perfil-titulo {
-        font-size: 2rem;
     }
 
     .barra-espacio h2 {
