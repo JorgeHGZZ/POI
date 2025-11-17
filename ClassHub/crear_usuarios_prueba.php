@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=UTF-8');
 require_once 'config/db.php';
 
 try {
@@ -12,6 +12,7 @@ try {
         ['email' => 'usuario5@test.com', 'nombre_usuario' => 'Luis Rodríguez', 'password' => password_hash('123456', PASSWORD_DEFAULT)]
     ];
     
+    // Usar PDO (no mysqli)
     $stmt = $conn->prepare("
         INSERT INTO usuarios (email, nombre_usuario, password, estado_conexion) 
         VALUES (?, ?, ?, 'offline')
@@ -31,12 +32,12 @@ try {
         'success' => true,
         'message' => count($creados) . ' usuarios creados/actualizados',
         'usuarios' => $creados
-    ]);
+    ], JSON_PRETTY_PRINT);
     
 } catch(PDOException $e) {
     echo json_encode([
         'success' => false,
         'message' => 'Error: ' . $e->getMessage()
-    ]);
+    ], JSON_PRETTY_PRINT);
 }
 ?>

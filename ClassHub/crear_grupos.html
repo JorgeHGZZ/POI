@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Grupo - ClassHub</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .users-section {
+            margin-bottom: 25px;
+        }
+
+        .users-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .user-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .user-item.selected {
+            background: #667eea;
+            color: white;
+        }
+
+        .user-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            cursor: pointer;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .user-email {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .selected-count {
+            background: #667eea;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-crear {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-crear:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-crear:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-cancelar {
+            background: #e0e0e0;
+            color: #666;
+        }
+
+        .btn-cancelar:hover {
+            background: #d0d0d0;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .char-count {
+            text-align: right;
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>✨ Crear Nuevo Grupo</h1>
+        <p class="subtitle">Crea un grupo para chatear y colaborar con tu equipo</p>
+
+        <div id="alert" class="alert"></div>
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 10px; color: #666;">Creando grupo...</p>
+        </div>
+
+        <form id="formCrearGrupo">
+            <div class="form-group">
+                <label for="nombreGrupo">Nombre del Grupo *</label>
+                <input type="text" id="nombreGrupo" name="nombre" 
+                       placeholder="Ej: Equipo Mundial 2026" 
+                       required maxlength="100">
+                <div class="char-count">
+                    <span id="nombreCount">0</span>/100 caracteres
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcionGrupo">Descripción (Opcional)</label>
+                <textarea id="descripcionGrupo" name="descripcion" 
+                          placeholder="Describe el propósito del grupo..."
+                          maxlength="255"></textarea>
+                <div class="char-count">
+                    <span id="descCount">0</span>/255 caracteres
+                </div>
+            </div>
+
+            <div class="users-section">
+                <label>Selecciona Miembros * (mínimo 2 adicionales)</label>
+                <div id="usersList" class="users-list">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+                <div class="selected-count">
+                    <span id="selectedCount">0</span> miembros seleccionados
+                </div>
+            </div>
+
+            <div class="buttons">
+                <button type="button" class="btn-cancelar" onclick="window.history.back()">
+                    Cancelar
+                </button>
+                <button type="submit" class="btn-crear" id="btnCrear">
+                    🚀 Crear Grupo
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost/POI/api'; // Ajusta tu URL
+        let usuariosSeleccionados = new Set();
+        let usuarioActualId = null;
+
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Obtener usuario actual (desde sesión o localStorage)
+            usuarioActualId = parseInt(localStorage.getItem('usuario_id') || '1');
+            await cargarUsuarios();
+            
+            // Listeners para contadores de caracteres
+            document.getElementById('nombreGrupo').addEventListener('input', (e) => {
+                document.getElementById('nombreCount').textContent = e.target.value.length;
+            });
+            
+            document.getElementById('descripcionGrupo').addEventListener('input', (e) => {
+                document.getElementById('descCount').textContent = e.target.value.length;
+            });
+        });
+
+        // Cargar lista de usuarios
+        async function cargarUsuarios() {
+            try {
+                const response = await fetch(`${API_URL}/usuarios.php`);
+                const data = await response.json();
+                
+                if (data.success && data.usuarios) {
+                    const usersList = document.getElementById('usersList');
+                    usersList.innerHTML = '';
+                    
+                    // Filtrar usuario actual
+                    const usuarios = data.usuarios.filter(u => u.id !== usuarioActualId);
+                    
+                    usuarios.forEach(usuario => {
+                        const userItem = document.createElement('div');
+                        userItem.className = 'user-item';
+                        userItem.innerHTML = `
+                            <input type="checkbox" class="user-checkbox" 
+                                   id="user-${usuario.id}" 
+                                   value="${usuario.id}">
+                            <div class="user-info">
+                                <div class="user-name">${usuario.nombre}</div>
+                                <div class="user-email">${usuario.email}</div>
+                            </div>
+                        `;
+                        
+                        userItem.addEventListener('click', (e) => {
+                            if (e.target.type !== 'checkbox') {
+                                const checkbox = userItem.querySelector('.user-checkbox');
+                                checkbox.checked = !checkbox.checked;
+                                toggleUsuario(usuario.id, checkbox.checked, userItem);
+                            } else {
+                                toggleUsuario(usuario.id, e.target.checked, userItem);
+                            }
+                        });
+                        
+                        usersList.appendChild(userItem);
+                    });
+                }
+            } catch (error) {
+                mostrarAlerta('Error al cargar usuarios: ' + error.message, 'error');
+            }
+        }
+
+        // Toggle selección de usuario
+        function toggleUsuario(usuarioId, seleccionado, element) {
+            if (seleccionado) {
+                usuariosSeleccionados.add(usuarioId);
+                element.classList.add('selected');
+            } else {
+                usuariosSeleccionados.delete(usuarioId);
+                element.classList.remove('selected');
+            }
+            
+            document.getElementById('selectedCount').textContent = usuariosSeleccionados.size;
+            
+            // Habilitar/deshabilitar botón según selección
+            const btnCrear = document.getElementById('btnCrear');
+            btnCrear.disabled = usuariosSeleccionados.size < 2;
+        }
+
+        // Enviar formulario
+        document.getElementById('formCrearGrupo').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const nombre = document.getElementById('nombreGrupo').value.trim();
+            const descripcion = document.getElementById('descripcionGrupo').value.trim();
+            
+            // Validaciones
+            if (!nombre) {
+                mostrarAlerta('El nombre del grupo es obligatorio', 'error');
+                return;
+            }
+            
+            if (usuariosSeleccionados.size < 2) {
+                mostrarAlerta('Debes seleccionar al menos 2 miembros adicionales', 'error');
+                return;
+            }
+            
+            // Preparar datos
+            const miembros = [usuarioActualId, ...Array.from(usuariosSeleccionados)];
+            
+            const data = {
+                nombre: nombre,
+                descripcion: descripcion,
+                creador_id: usuarioActualId,
+                miembros: miembros,
+                tipo: 'grupo' // o 'equipo' según tu lógica
+            };
+            
+            // Mostrar loading
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('formCrearGrupo').style.display = 'none';
+            
+            try {
+                const response = await fetch(`${API_URL}/grupos.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    mostrarAlerta(`✅ Grupo "${nombre}" creado exitosamente`, 'success');
+                    
+                    // Redirigir después de 2 segundos
+                    setTimeout(() => {
+                        window.location.href = 'test_grupos.html'; // o tu página principal
+                    }, 2000);
+                } else {
+                    throw new Error(result.message || 'Error al crear el grupo');
+                }
+            } catch (error) {
+                document.getElementById('loading').classList.remove('show');
+                document.getElementById('formCrearGrupo').style.display = 'block';
+                mostrarAlerta('Error: ' + error.message, 'error');
+            }
+        });
+
+        // Mostrar alertas
+        function mostrarAlerta(mensaje, tipo) {
+            const alert = document.getElementById('alert');
+            alert.textContent = mensaje;
+            alert.className = `alert ${tipo} show`;
+            
+            setTimeout(() => {
+                alert.classList.remove('show');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <?php
-header('Content-Type: application/json');
+header('Content-Type: application/json; charset=UTF-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
 header('Access-Control-Allow-Headers: Content-Type');
@@ -33,10 +33,14 @@ switch($method) {
         break;
 }
 
+// ============================================
+// CREAR GRUPO (Privado o Grupal)
+// ============================================
 function crearGrupo($data) {
     global $conn;
     
     try {
+        // Validar datos recibidos
         if(!isset($data['nombre']) || !isset($data['creador_id']) || !isset($data['miembros'])) {
             echo json_encode([
                 'success' => false,
@@ -50,6 +54,7 @@ function crearGrupo($data) {
         $miembros = $data['miembros'];
         $tipo = isset($data['tipo']) ? $data['tipo'] : 'grupal';
         
+        // VALIDACIÓN 1: Nombre no vacío
         if(empty($nombre)) {
             echo json_encode([
                 'success' => false,
@@ -58,6 +63,7 @@ function crearGrupo($data) {
             return;
         }
         
+        // VALIDACIÓN 2: Para grupos grupales, mínimo 3 integrantes
         if($tipo == 'grupal') {
             if(!in_array($creador_id, $miembros)) {
                 array_unshift($miembros, $creador_id);
@@ -74,16 +80,17 @@ function crearGrupo($data) {
             }
         }
         
+        // VALIDACIÓN 3: Para chats privados, exactamente 2 personas
         if($tipo == 'privado') {
             if(count($miembros) != 2) {
                 echo json_encode([
                     'success' => false,
-                    'message' => 'Los chats privados solo pueden tener 2 integrantes',
-                    'miembros_actuales' => count($miembros)
+                    'message' => 'Los chats privados solo pueden tener 2 integrantes'
                 ]);
                 return;
             }
             
+            // Verificar si ya existe chat privado
             $stmt = $conn->prepare("
                 SELECT g.id 
                 FROM grupos g
@@ -105,6 +112,7 @@ function crearGrupo($data) {
             }
         }
         
+        // VALIDACIÓN 4: Verificar que usuarios existen
         $placeholders = str_repeat('?,', count($miembros) - 1) . '?';
         $stmt = $conn->prepare("SELECT COUNT(*) as total FROM usuarios WHERE id IN ($placeholders)");
         $stmt->execute($miembros);
@@ -113,13 +121,15 @@ function crearGrupo($data) {
         if($result['total'] != count($miembros)) {
             echo json_encode([
                 'success' => false,
-                'message' => 'Uno o más usuarios no existen en la base de datos'
+                'message' => 'Uno o más usuarios no existen'
             ]);
             return;
         }
         
+        // Iniciar transacción
         $conn->beginTransaction();
         
+        // Insertar grupo con los nombres CORRECTOS de columnas
         $stmt = $conn->prepare("
             INSERT INTO grupos (nombre, tipo, creado_por, created_at) 
             VALUES (?, ?, ?, NOW())
@@ -127,17 +137,22 @@ function crearGrupo($data) {
         $stmt->execute([$nombre, $tipo, $creador_id]);
         $grupo_id = $conn->lastInsertId();
         
+        // Insertar miembros con los nombres CORRECTOS de columnas
         $stmt = $conn->prepare("
-            INSERT INTO grupo_miembros (grupo_id, usuario_id, fecha_union) 
-            VALUES (?, ?, NOW())
+            INSERT INTO grupo_miembros (grupo_id, usuario_id, rol, unido_en) 
+            VALUES (?, ?, ?, NOW())
         ");
         
         foreach($miembros as $usuario_id) {
-            $stmt->execute([$grupo_id, $usuario_id]);
+            // El creador es admin, los demás son miembros
+            $rol = ($usuario_id == $creador_id) ? 'admin' : 'miembro';
+            $stmt->execute([$grupo_id, $usuario_id, $rol]);
         }
         
+        // Confirmar transacción
         $conn->commit();
         
+        // Obtener información completa del grupo creado
         $stmt = $conn->prepare("
             SELECT g.*, 
                    u.nombre_usuario as creador_nombre,
@@ -168,6 +183,9 @@ function crearGrupo($data) {
     }
 }
 
+// ============================================
+// OBTENER GRUPOS DE UN USUARIO
+// ============================================
 function obtenerGruposDeUsuario($usuario_id) {
     global $conn;
     
@@ -175,20 +193,15 @@ function obtenerGruposDeUsuario($usuario_id) {
         $stmt = $conn->prepare("
             SELECT g.*, 
                    u.nombre_usuario as creador_nombre,
-                   COUNT(DISTINCT gm.usuario_id) as total_miembros,
-                   (SELECT COUNT(*) 
-                    FROM mensajes m 
-                    WHERE m.grupo_id = g.id 
-                    AND m.leido = 0 
-                    AND m.remitente_id != ?) as mensajes_no_leidos
+                   COUNT(DISTINCT gm.usuario_id) as total_miembros
             FROM grupos g
             INNER JOIN grupo_miembros gm_user ON g.id = gm_user.grupo_id AND gm_user.usuario_id = ?
             LEFT JOIN usuarios u ON g.creado_por = u.id
             LEFT JOIN grupo_miembros gm ON g.id = gm.grupo_id
-            GROUP BY g.id, u.nombre_usuario
+            GROUP BY g.id
             ORDER BY g.created_at DESC
         ");
-        $stmt->execute([$usuario_id, $usuario_id]);
+        $stmt->execute([$usuario_id]);
         $grupos = $stmt->fetchAll();
         
         echo json_encode([
@@ -204,10 +217,14 @@ function obtenerGruposDeUsuario($usuario_id) {
     }
 }
 
+// ============================================
+// OBTENER DETALLES DE UN GRUPO
+// ============================================
 function obtenerDetallesGrupo($grupo_id) {
     global $conn;
     
     try {
+        // Información del grupo
         $stmt = $conn->prepare("
             SELECT g.*, 
                    u.nombre_usuario as creador_nombre,
@@ -227,16 +244,14 @@ function obtenerDetallesGrupo($grupo_id) {
             return;
         }
         
+        // Miembros del grupo
         $stmt = $conn->prepare("
-            SELECT u.id, 
-                   u.nombre_usuario as nombre, 
-                   u.email, 
-                   u.estado_conexion, 
-                   gm.fecha_union
+            SELECT u.id, u.nombre_usuario as nombre, u.email, u.estado_conexion, 
+                   gm.rol, gm.unido_en as fecha_union
             FROM grupo_miembros gm
             INNER JOIN usuarios u ON gm.usuario_id = u.id
             WHERE gm.grupo_id = ?
-            ORDER BY gm.fecha_union ASC
+            ORDER BY gm.unido_en ASC
         ");
         $stmt->execute([$grupo_id]);
         $miembros = $stmt->fetchAll();
@@ -257,6 +272,9 @@ function obtenerDetallesGrupo($grupo_id) {
     }
 }
 
+// ============================================
+// AGREGAR MIEMBROS A UN GRUPO
+// ============================================
 function agregarMiembros($data) {
     global $conn;
     
@@ -272,6 +290,7 @@ function agregarMiembros($data) {
         $grupo_id = $data['grupo_id'];
         $nuevos_miembros = $data['nuevos_miembros'];
         
+        // Verificar que el grupo existe y es grupal
         $stmt = $conn->prepare("SELECT tipo FROM grupos WHERE id = ?");
         $stmt->execute([$grupo_id]);
         $grupo = $stmt->fetch();
@@ -295,8 +314,8 @@ function agregarMiembros($data) {
         $conn->beginTransaction();
         
         $stmt = $conn->prepare("
-            INSERT IGNORE INTO grupo_miembros (grupo_id, usuario_id, fecha_union) 
-            VALUES (?, ?, NOW())
+            INSERT IGNORE INTO grupo_miembros (grupo_id, usuario_id, rol, unido_en) 
+            VALUES (?, ?, 'miembro', NOW())
         ");
         
         $agregados = 0;
@@ -323,6 +342,9 @@ function agregarMiembros($data) {
     }
 }
 
+// ============================================
+// ELIMINAR GRUPO
+// ============================================
 function eliminarGrupo($grupo_id) {
     global $conn;
     
